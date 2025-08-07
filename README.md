@@ -1,3 +1,3 @@
 # app_series_api
 
-A new Flutter project.
+Projeto 03 da trilha de flutter da venturus.
