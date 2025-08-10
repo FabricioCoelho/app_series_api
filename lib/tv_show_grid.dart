@@ -47,21 +47,21 @@ class _TvShowGridState extends State<TvShowGrid> {
                           fit: BoxFit.cover,
                           loadingBuilder: (context, child, loadingProgress) =>
                               loadingProgress == null
-                              ? child
-                              : Center(
-                                  child: CircularProgressIndicator(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.primary,
-                                  ),
-                                ),
+                                  ? child
+                                  : Center(
+                                      child: CircularProgressIndicator(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
+                                      ),
+                                    ),
                           errorBuilder: (context, child, stackTrace) =>
                               Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                color: Theme.of(context).colorScheme.primary,
-                                child: Icon(Icons.error),
-                              ),
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Theme.of(context).colorScheme.primary,
+                            child: Icon(Icons.error),
+                          ),
                         ),
                       ),
                     ),
@@ -90,20 +90,25 @@ class _TvShowGridState extends State<TvShowGrid> {
                 ),
               ),
             ),
-            tvShowModel.tvShows.any((show) => show.id == tvShow.id)
-                ? Positioned(
+            FutureBuilder<bool>(
+                future: tvShowModel.isFavorite(tvShow),
+                builder: (context, snapshot) {
+                  final isFavorite = snapshot.data ?? false;
+                  return Positioned(
                     child: IconButton(
-                      onPressed: () =>
-                          tvShowModel.removeTvShow(tvShow, context),
-                      icon: Icon(Icons.favorite, size: 32, color: Colors.red),
-                    ),
-                  )
-                : Positioned(
-                    child: IconButton(
-                      onPressed: () => tvShowModel.addTvShow(tvShow, context),
-                      icon: Icon(Icons.favorite_border_sharp, size: 32),
-                    ),
-                  ),
+                        icon: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            size: 32,
+                            color: isFavorite ? Colors.red : null),
+                        onPressed: () {
+                          if (isFavorite) {
+                            tvShowModel.removeFromFavorites(tvShow);
+                          } else {
+                            tvShowModel.addToFavorites(tvShow);
+                          }
+                        }),
+                  );
+                }),
           ],
         );
       },

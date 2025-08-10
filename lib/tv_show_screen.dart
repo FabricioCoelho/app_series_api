@@ -15,8 +15,8 @@ class TvShowScreen extends StatefulWidget {
 
 class _TvShowScreenState extends State<TvShowScreen> {
   late Future<TvShow> tvShow = context.read<TvShowModel>().getTvShowById(
-    widget.id,
-  );
+        widget.id,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +73,13 @@ class _TvShowScreenState extends State<TvShowScreen> {
                       fit: BoxFit.cover,
                       loadingBuilder: (context, child, loadingProgress) =>
                           loadingProgress == null
-                          ? child
-                          : Center(
-                              child: CircularProgressIndicator(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
+                              ? child
+                              : Center(
+                                  child: CircularProgressIndicator(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
                       errorBuilder: (context, child, stackTrace) => Container(
                         width: double.infinity,
                         height: 200,
